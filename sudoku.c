@@ -184,7 +184,7 @@ bool two_side_squeeze(int puzzle[9][9], int value, int row, int col) {
    bool value_in_col_two_left = value_in_col(puzzle, value, col - 2);
    bool value_in_col_two_right = value_in_col(puzzle, value, col + 2);
 
-   if (only_zero_in_box_row(puzzle, row, col) == false) { return false; }
+   if (only_zero_in_box_col(puzzle, row, col) == false) { return false; }
    
    if (rel_box_row == 0) {
       if (value_in_row_below && value_in_row_two_below) { return true; }
@@ -195,7 +195,7 @@ bool two_side_squeeze(int puzzle[9][9], int value, int row, int col) {
    }
 
    
-   if (only_zero_in_box_col(puzzle, row, col) == false) { return false; }
+   if (only_zero_in_box_row(puzzle, row, col) == false) { return false; }
    
    if (rel_box_col == 0) {
       if (value_in_col_right && value_in_col_two_right) { return true; }
@@ -208,21 +208,21 @@ bool two_side_squeeze(int puzzle[9][9], int value, int row, int col) {
    return false;
 }
 
+// when two rows/cols and one of the other leave only one spot 
 bool three_side_squeeze(int puzzle[9][9], int value, int row, int col) {
 
    int rel_box_row = row % 3;
    int rel_box_col = col % 3;
-   bool value_in_row_above = value_in_row(puzzle, value, row - 1);
-   bool value_in_row_below = value_in_row(puzzle, value, row + 1);
-   bool value_in_row_two_below = value_in_row(puzzle, value, row - 2);
-   bool value_in_row_two_above = value_in_row(puzzle, value, row + 2);
+   bool in_row_above = value_in_row(puzzle, value, row - 1);
+   bool in_row_below = value_in_row(puzzle, value, row + 1);
+   bool in_row_two_below = value_in_row(puzzle, value, row - 2);
+   bool in_row_two_above = value_in_row(puzzle, value, row + 2);
 
-   bool value_in_col_left = value_in_col(puzzle, value, col - 1);
-   bool value_in_col_right = value_in_col(puzzle, value, col + 1);
-   bool value_in_col_two_left = value_in_col(puzzle, value, col - 2);
-   bool value_in_col_two_right = value_in_col(puzzle, value, col + 2);
+   bool in_col_left = value_in_col(puzzle, value, col - 1);
+   bool in_col_right = value_in_col(puzzle, value, col + 1);
+   bool in_col_two_left = value_in_col(puzzle, value, col - 2);
+   bool in_col_two_right = value_in_col(puzzle, value, col + 2);
 
-   
    
    return false;
 }
