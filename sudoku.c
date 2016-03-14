@@ -24,7 +24,6 @@ bool can_go_in_rc(int puzzle[9][9], int value, int row, int col) {
       return false;
    }
 
-
    // check if the number is already in the row
    for (int i = 0; i < 9; i++) {
       if (puzzle[row][i] == value) {
@@ -141,6 +140,34 @@ bool value_in_col(int puzzle[9][9], int value, int col) {
    return false;
 }
 
+bool only_zero_in_box_row(int puzzle[9][9], int row, int col) {
+
+   if (puzzle[row][col] != 0) { return false; }
+   
+   switch (row % 3) {
+   case 0: 
+      return puzzle[row + 1][col] != 0 && puzzle[row + 2][col] != 0;
+   case 1: 
+      return puzzle[row + 1][col] != 0 && puzzle[row - 1][col] != 0;
+   default:
+      return puzzle[row - 1][col] != 0 && puzzle[row - 2][col] != 0;
+   }
+}      
+
+bool only_zero_in_box_col(int puzzle[9][9], int row, int col) {
+
+   if (puzzle[row][col] != 0) { return false; }
+   
+   switch (col % 3) {
+   case 0: 
+      return puzzle[row][col + 1] != 0 && puzzle[row][col + 2] != 0;
+   case 1: 
+      return puzzle[row][col + 1] != 0 && puzzle[row][col - 1] != 0;
+   default:
+      return puzzle[row][col - 1] != 0 && puzzle[row][col - 2] != 0;
+   }
+}      
+
 // if the number is in the two other rows/columns and
 //   there is only one place left to put it, put it there
 bool two_side_squeeze(int puzzle[9][9], int value, int row, int col) {
@@ -158,6 +185,7 @@ bool two_side_squeeze(int puzzle[9][9], int value, int row, int col) {
    bool value_in_col_two_right = value_in_col(puzzle, value, col + 2);
 
    if (only_zero_in_box_row(puzzle, row, col) == false) { return false; }
+   
    if (rel_box_row == 0) {
       if (value_in_row_below && value_in_row_two_below) { return true; }
    } else if (rel_box_row == 1) {
@@ -165,8 +193,10 @@ bool two_side_squeeze(int puzzle[9][9], int value, int row, int col) {
    } else {
       if (value_in_row_above && value_in_row_two_above) { return true; }
    }
+
    
    if (only_zero_in_box_col(puzzle, row, col) == false) { return false; }
+   
    if (rel_box_col == 0) {
       if (value_in_col_right && value_in_col_two_right) { return true; }
    } else if (rel_box_col == 1) {
